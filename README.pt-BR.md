@@ -2,7 +2,7 @@
 
 <img src="./assets/flash.png" width="1000">
 
-[中文版](./README.zh-CN.md) [Русский](./README.ru-RU.md) [Português](./README.pt-BR.md) [Español](./readme-es-ES.md)
+[中文版](./README.zh-CN.md) [Русский](./README.ru-RU.md) [Português](./README.pt-BR.md) [Español](./readme-es-ES.md) [正體中文](./README.zh-TW.md)
 
 ## Introdução
 
