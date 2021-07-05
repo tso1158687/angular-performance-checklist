@@ -59,7 +59,7 @@ Note that most practices are valid for both HTTP/1.1 and HTTP/2. Practices which
       - [Minimize DOM elements](#minimize-dom-elements)
     - [Optimize template expressions](#optimize-template-expressions)
 - [結論](#conclusion)
-- [Contributing](#contributing)
+- [貢獻](#contributing)
 
 ## 網路效能
 
@@ -567,16 +567,16 @@ Angular executes template expressions after every change detection cycle. Change
 Expressions should finish quickly or the user experience may drag, especially on slower devices. Consider caching values when their computation is expensive.
 
 **資源**
-- [quick-execution](https://angular.io/guide/template-syntax#quick-execution) - official documentation for template expressions
-- [Increasing Performance - more than a pipe dream](https://youtu.be/I6ZvpdRM1eQ) - ng-conf video on youtube. Using pipe instead of function in interpolation expression
+- [quick-execution](https://angular.tw/guide/template-syntax#quick-execution) - 官方範本語法的文件
+- [Increasing Performance - more than a pipe dream](https://youtu.be/I6ZvpdRM1eQ) - youtube 上的 ng-conf 影片。 在插值表達式裡面使用管道取代 function。
 
-# Conclusion
+# 結論
 
 The list of practices will dynamically evolve over time with new/updated practices. In case you notice something missing or you think that any of the practices can be improved do not hesitate to fire an issue and/or a PR. For more information please take a look at the "[Contributing](#contributing)" section below.
 
-# Contributing
+# 貢獻
 
-In case you notice something missing, incomplete or incorrect, a pull request will be greatly appreciated. For discussion of practices that are not included in the document please [open an issue](https://github.com/mgechev/angular2-performance-checklist/issues).
+假如你發現有缺少、不完整或不正確的內容，非常樂意看到你的 PR。關於本文未包含的實務討論，請 [open an issue](https://github.com/mgechev/angular2-performance-checklist/issues).
 
 # 授權
 
