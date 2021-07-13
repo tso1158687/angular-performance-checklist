@@ -33,22 +33,22 @@ Note that most practices are valid for both HTTP/1.1 and HTTP/2. Practices which
     - [打包](#bundling)
     - [Minification and Dead code elimination](#minification-and-dead-code-elimination)
     - [Remove template whitespace](#remove-template-whitespace)
-    - [Tree-shaking](#tree-shaking)
-    - [Tree-shakeable providers](#tree-shakeable-providers)
-    - [Ahead-of-Time (AoT) Compilation](#ahead-of-time-aot-compilation)
+    - [搖樹優化](#tree-shaking)
+    - [搖樹優化提供者](#tree-shakeable-providers)
+    - [預先（AOT）編譯器](#ahead-of-time-aot-compilation)
     - [Compression](#compression)
     - [Pre-fetching 資源](#pre-fetching-資源)
-    - [Lazy-Loading of 資源](#lazy-loading-of-資源)
+    - [惰性載入資源](#lazy-loading-of-資源)
     - [Don't lazy-load default route](#dont-lazy-load-the-default-route)
     - [快取](#caching)
     - [Use Application Shell](#use-application-shell)
     - [Use Service Workers](#use-service-workers)
-  - [Runtime Optimizations](#runtime-optimizations)
-    - [Use `enableProdMode`](#use-enableprodmode)
-    - [Ahead-of-Time Compilation](#ahead-of-time-compilation)
+  - [運行時最佳化](#runtime-optimizations)
+    - [使用 `enableProdMode`](#use-enableprodmode)
+    - [預先（AOT）編譯器](#ahead-of-time-compilation)
     - [Web Workers](#web-workers)
-    - [Server-Side Rendering](#server-side-rendering)
-    - [Change Detection](#change-detection)
+    - [伺服器端渲染](#server-side-rendering)
+    - [變更檢測](#change-detection)
       - [`ChangeDetectionStrategy.OnPush`](#changedetectionstrategyonpush)
       - [Detaching the Change Detector](#detaching-the-change-detector)
       - [Run outside Angular](#run-outside-angular)
@@ -112,7 +112,7 @@ Thankfully, we don't have to do this manually. The `ComponentMetadata` interface
 
 - [preserveWhitespaces in the Angular docs](https://angular.io/api/core/Component#preserveWhitespaces)
 
-### Tree-shaking
+### 搖樹優化
 
 For the final version of our applications, we usually don't use the entire code which is provided by Angular and/or any third-party library, even the one that we've written. Thanks to the static nature of the ES2015 modules, we're able to get rid of the code which is not referenced in our apps.
 
@@ -150,7 +150,7 @@ This means that the unused export `bar` will not be included into the final bund
 - ["2.5X Smaller Angular Applications with Google Closure Compiler"](http://blog.mgechev.com/2016/07/21/even-smaller-angular2-applications-closure-tree-shaking/)
 - ["Using pipeable operators in RxJS"](https://github.com/ReactiveX/rxjs/blob/master/doc/pipeable-operators.md)
 
-### Tree-Shakeable Providers
+### 搖樹優化提供者
 
 Since the release of Angular version 6, The angular team provided a new feature to allow services to be tree-shakeable, meaning that your services will not be included in the final bundle unless they're being used by other services or components. This can help reduce the bundle size by removing unused code from the bundle.
 
@@ -225,9 +225,9 @@ If `MyService` is not injected in any component/service, then it will not be inc
 
 - [Angular Providers](https://angular.io/guide/providers)
 
-### Ahead-of-Time (AoT) Compilation
+### 預先（AOT）編譯器
 
-A challenge for the available in the wild tools (such as GCC, Rollup, etc.) are the HTML-like templates of the Angular components, which cannot be analyzed with their capabilities. This makes their tree-shaking support less efficient because they're not sure which directives are referenced within the templates. The AoT compiler transpiles the Angular HTML-like templates to JavaScript or TypeScript with ES2015 module imports. This way we are able to efficiently tree-shake during bundling and remove all the unused directives defined by Angular, third-party libraries or by ourselves.
+A challenge for the available in the wild tools (像是 GCC、 Rollup 等等) are the HTML-like templates of the Angular components, which cannot be analyzed with their capabilities. This makes their tree-shaking support less efficient because they're not sure which directives are referenced within the templates. The AoT compiler transpiles the Angular HTML-like templates to JavaScript or TypeScript with ES2015 module imports. This way we are able to efficiently tree-shake during bundling and remove all the unused directives defined by Angular, third-party libraries or by ourselves.
 
 **資源**
 
@@ -253,7 +253,7 @@ The 工具 here is not Angular-specific and entirely depends on the web/applicat
 
 Resource pre-fetching is a great way to improve user experience. We can either pre-fetch assets (images, styles, modules intended to be [loaded lazily](#lazy-loading-of-資源), etc.) or data. There are different pre-fetching strategies but most of them depend on specifics of the application.
 
-### Lazy-Loading of 資源
+### 惰性載入資源
 
 In case the target application has a huge code base with hundreds of dependencies, the practices listed above may not help us reduce the bundle to a reasonable size (reasonable might be 100K or 2M, it again, completely depends on the business goals).
 
@@ -319,15 +319,14 @@ You can add a Service Worker to your Angular project by running
 - ["The offline cookbook"](https://jakearchibald.com/2014/offline-cookbook/)
 - ["Getting started with service workers"](https://angular.io/guide/service-worker-getting-started)
 
-## Runtime Optimizations
+## 運行時最佳化
+本章節包含一些應用的實例以提供更順暢的60幀 (fps) 使用者體驗。
 
-This section includes practices that can be applied in order to provide smoother user experience with 60 frames per second (fps).
+### 使用 `enableProdMode`
 
-### Use `enableProdMode`
+在開發模式 Angular 執行額外的檢查去確認檢測不會導致對任何綁定的任何額外更改。這樣一來，框架可以確保遵循單向資料流
 
-In development mode, Angular performs some extra checks in order to verify that performing change detection does not result in any additional changes to any of the bindings. This way the frameworks assures that the unidirectional data flow has been followed.
-
-In order to disable these changes for production do not forget to invoke `enableProdMode`:
+在正式產品要關閉這些檢測，別忘記呼叫 `enableProdMode`:
 
 ```typescript
 import { enableProdMode } from '@angular/core';
