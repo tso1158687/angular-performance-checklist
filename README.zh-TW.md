@@ -9,7 +9,7 @@
 - [日本語](./README.ja-JP.md)
 - [正體中文](./README.zh-TW.md)
 
-## Introduction
+## 介紹
 
 本文列出許多改善 Angular 應用程式的性能的方法。「Angular 效能清單」涵蓋諸多主題，從伺服器端的渲染、預先渲染、建構應用程式到執行時的效能與框架變更檢測性能的最佳化
 
@@ -20,19 +20,20 @@
 
 Some practices impact both categories so there could be a slight intersection, however, the differences in the use cases and the implications will be explicitly mentioned.
 
-Most subsections list tools, related to the specific practice, that can make us more efficient by automating our development flow.
+大多數小節所列出來與特定例子相關的工具，可以幫助我們透過自動化的開發流程提高效率
 
-Note that most practices are valid for both HTTP/1.1 and HTTP/2. Practices which make an exception will be mentioned by specifying to which version of the protocol they could be applied.
+注意大多數的例子都適用於HTTP/1.1 和 HTTP/2。
+ Practices which make an exception will be mentioned by specifying to which version of the protocol they could be applied.
 
 ## 目錄
 
-- [Angular Performance Checklist](#angular-2-performance-checklist)
+- [Angular 效能清單](#angular-2-performance-checklist)
   - [介紹](#introduction)
   - [目錄](#table-of-content)
   - [網路效能](#network-performance)
     - [打包](#bundling)
     - [Minification and Dead code elimination](#minification-and-dead-code-elimination)
-    - [Remove template whitespace](#remove-template-whitespace)
+    - [移除模板空白](#移除模板空白)
     - [搖樹優化](#tree-shaking)
     - [搖樹優化提供者](#tree-shakeable-providers)
     - [預先（AOT）編譯器](#ahead-of-time-aot-compilation)
@@ -41,8 +42,8 @@ Note that most practices are valid for both HTTP/1.1 and HTTP/2. Practices which
     - [惰性載入資源](#lazy-loading-of-資源)
     - [Don't lazy-load default route](#dont-lazy-load-the-default-route)
     - [快取](#caching)
-    - [Use Application Shell](#use-application-shell)
-    - [Use Service Workers](#use-service-workers)
+    - [使用 Application Shell](#use-application-shell)
+    - [使用 Service Workers](#use-service-workers)
   - [運行時最佳化](#runtime-optimizations)
     - [使用 `enableProdMode`](#use-enableprodmode)
     - [預先（AOT）編譯器](#ahead-of-time-compilation)
@@ -56,10 +57,10 @@ Note that most practices are valid for both HTTP/1.1 and HTTP/2. Practices which
     - [Use pure pipes](#use-pure-pipes)
     - [`*ngFor` directive](#ngfor-directive)
       - [使用 `trackBy` 選項](#use-trackby-option)
-      - [Minimize DOM elements](#minimize-dom-elements)
+      - [最小化 DOM 元素](#最小化 DOM 元素)
     - [Optimize template expressions](#optimize-template-expressions)
 - [結論](#conclusion)
-- [貢獻](#contributing)
+- [貢獻](#貢獻)
 
 ## 網路效能
 
@@ -104,11 +105,12 @@ These practices allow us to minimize the bandwidth consumption by reducing the p
 - ["Building an Angular Application for Production"](http://blog.mgechev.com/2016/06/26/tree-shaking-angular2-production-build-rollup-javascript/)
 - ["2.5X Smaller Angular Applications with Google Closure Compiler"](http://blog.mgechev.com/2016/07/21/even-smaller-angular2-applications-closure-tree-shaking/)
 
-### Remove template whitespace
+### 移除模板空白
 
-Although we don't see the whitespace character (a character matching the `\s` regex) it is still represented by bytes which are transferred over the network. If we reduce the whitespace from our templates to the minimum we will be respectively able to drop the bundle size of the AoT code even further.
+雖然我們看不到空白字元 （與 `\s` 正則表達式相符的字元，仍然會佔用位元且通過網路傳輸。如果將模板中的空白降低到最小，將能降低在 AOT 模式下程式碼打包的大小。
 
-Thankfully, we don't have to do this manually. The `ComponentMetadata` interface provides the property `preserveWhitespaces` which by default has value `false` meaning that by default the Angular compiler will trim whitespaces to further reduce the size of our application. In case we set the property to `true` Angular will preserve the whitespace.
+幸好我們不用手動做這件事情。
+ The `ComponentMetadata` interface provides the property `preserveWhitespaces` which by default has value `false` meaning that by default the Angular compiler will trim whitespaces to further reduce the size of our application. In case we set the property to `true` Angular will preserve the whitespace.
 
 - [preserveWhitespaces in the Angular docs](https://angular.io/api/core/Component#preserveWhitespaces)
 
@@ -543,8 +545,9 @@ export class YtFeedComponent {
 }
 ```
 
-#### Minimize DOM elements
+#### 最小化 DOM 元素
 
+當增加元素到畫面上的時候，渲染 DOM 元素通常是最成本最高的操作。
 Rendering the DOM elements is usually the most expensive operation when adding elements to the UI. The main work is usually caused by inserting the element into the DOM and applying the styles. If `*ngFor` renders a lot of elements, browsers (especially older ones) may slow down and need more time to finish rendering of all elements. This is not specific to Angular.
 
 To reduce rendering time, try the following:
