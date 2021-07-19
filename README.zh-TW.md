@@ -32,14 +32,14 @@ Some practices impact both categories so there could be a slight intersection, h
   - [目錄](#table-of-content)
   - [網路效能](#network-performance)
     - [打包](#bundling)
-    - [Minification and Dead code elimination](#minification-and-dead-code-elimination)
+    - [最小化與清除無用程式碼](#minification-and-dead-code-elimination)
     - [移除模板空白](#移除模板空白)
     - [搖樹優化](#tree-shaking)
     - [搖樹優化提供者](#tree-shakeable-providers)
     - [預先（AOT）編譯器](#ahead-of-time-aot-compilation)
-    - [Compression](#compression)
-    - [Pre-fetching 資源](#pre-fetching-資源)
-    - [惰性載入資源](#lazy-loading-of-資源)
+    - [壓縮](#compression)
+    - [預先載入資源](#預先載入資源)
+    - [惰性載入資源](#惰性載入資源資源)
     - [Don't lazy-load default route](#dont-lazy-load-the-default-route)
     - [快取](#caching)
     - [使用 Application Shell](#use-application-shell)
@@ -54,11 +54,11 @@ Some practices impact both categories so there could be a slight intersection, h
       - [Detaching the Change Detector](#detaching-the-change-detector)
       - [Run outside Angular](#run-outside-angular)
       - [Coalescing event change detections](#coalescing-event-change-detections)
-    - [Use pure pipes](#use-pure-pipes)
+    - [使用純管道](#use-pure-pipes)
     - [`*ngFor` directive](#ngfor-directive)
       - [使用 `trackBy` 選項](#use-trackby-option)
       - [最小化 DOM 元素](#最小化 DOM 元素)
-    - [Optimize template expressions](#optimize-template-expressions)
+    - [最佳化模板語法](#optimize-template-expressions)
 - [結論](#conclusion)
 - [貢獻](#貢獻)
 
@@ -144,7 +144,7 @@ This means that the unused export `bar` will not be included into the final bund
 - [Rollup](https://github.com/rollup/rollup) - provides bundling by performing an efficient tree-shaking, taking advantage of the static nature of the ES2015 modules.
 - [Google Closure Compiler](https://github.com/google/closure-compiler) - performs plenty of optimizations and provides bundling support. Originally written in Java, since recently it has also a [JavaScript version](https://www.npmjs.com/package/google-closure-compiler) that can be [found here](https://www.npmjs.com/package/google-closure-compiler).
 
-*Note:* GCC does not support `export *` yet, which is essential for building Angular applications because of the heavy usage of the "barrel" pattern.
+*注意:* GCC does not support `export *` yet, which is essential for building Angular applications because of the heavy usage of the "barrel" pattern.
 
 **資源**
 
@@ -154,7 +154,7 @@ This means that the unused export `bar` will not be included into the final bund
 
 ### 搖樹優化提供者
 
-Since the release of Angular version 6, The angular team provided a new feature to allow services to be tree-shakeable, meaning that your services will not be included in the final bundle unless they're being used by other services or components. This can help reduce the bundle size by removing unused code from the bundle.
+自從 Angular 6 發布之後， Angular 團隊提供一項新特色允許將服務 (service) 搖樹優化，這表示除非你的服務在其他服務或元件中使用到，不然將不會包含在最終的打包當中。刪除未使用的程式碼，將有助於縮小打包過後的大小。
 
 You can make your services tree-shakeable by using the `providedIn` attribute to define where the service should be initialized when using the `@Injectable()` decorator. Then you should remove it from the `providers` attribute of your `NgModule` declaration as well as its import statement as follows.
 
@@ -251,7 +251,7 @@ The 工具 here is not Angular-specific and entirely depends on the web/applicat
 - ["Better than Gzip Compression with Brotli"](https://hacks.mozilla.org/2015/11/better-than-gzip-compression-with-brotli/)
 - ["2.5X Smaller Angular Applications with Google Closure Compiler"](http://blog.mgechev.com/2016/07/21/even-smaller-angular2-applications-closure-tree-shaking/)
 
-### Pre-fetching 資源
+### 預先載入資源
 
 Resource pre-fetching is a great way to improve user experience. We can either pre-fetch assets (images, styles, modules intended to be [loaded lazily](#lazy-loading-of-資源), etc.) or data. There are different pre-fetching strategies but most of them depend on specifics of the application.
 
