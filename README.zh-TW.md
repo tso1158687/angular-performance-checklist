@@ -91,9 +91,9 @@ Tools which allows us to bundle our applications efficiently are:
 - ["Building an Angular Application for Production"](http://blog.mgechev.com/2016/06/26/tree-shaking-angular2-production-build-rollup-javascript/)
 - ["2.5X Smaller Angular Applications with Google Closure Compiler"](http://blog.mgechev.com/2016/07/21/even-smaller-angular2-applications-closure-tree-shaking/)
 
-### Minification and dead code elimination
+### 最小化與清除無用程式碼
 
-These practices allow us to minimize the bandwidth consumption by reducing the payload of our application.
+這些例子可以減少我們應用程式的負荷以淺少頻寬的消耗
 
 **工具**
 
@@ -116,7 +116,7 @@ These practices allow us to minimize the bandwidth consumption by reducing the p
 
 ### 搖樹優化
 
-For the final version of our applications, we usually don't use the entire code which is provided by Angular and/or any third-party library, even the one that we've written. Thanks to the static nature of the ES2015 modules, we're able to get rid of the code which is not referenced in our apps.
+我們通常不會在應用程式的最終版本使用 Angular 或任何第三方套件，甚至不會使用所有我們自己寫的程式碼。幸好有 ES2015 模組的靜態特性，我們可以剔除未引用至我們應用程式的程式碼
 
 **範例**
 
@@ -129,14 +129,14 @@ export bar = () => 'bar';
 import { foo } from './foo';
 console.log(foo());
 ```
-Once we tree-shake and bundle `app.js` we'll get:
+當使用搖樹優化且打包至 `app.js` 會得到
 
 ```javascript
 let foo = () => 'foo';
 console.log(foo());
 ```
 
-This means that the unused export `bar` will not be included into the final bundle.
+也就是說，沒有用到的匯出 `bar` 將不會被包含至最終的打包
 
 **工具**
 
@@ -340,7 +340,9 @@ if (ENV === 'production') {
 
 ### Ahead-of-Time Compilation
 
-AoT can be helpful not only for achieving more efficient bundling by performing tree-shaking, but also for improving the runtime performance of our applications. The alternative of AoT is Just-in-Time compilation (JiT) which is performed runtime, therefore we can reduce the amount of computations required for the rendering of our application by performing the compilation as part of our build process.
+<!-- TODO:還沒好 -->
+AOT 不僅可以在執行搖樹的時候更有效率，更可以增加應用程式在執行時的效能。相較於 AOT 的另外一個選擇是在執行期間執行的 JIT ，因此我們可以當作建構應用程式的流程，降低
+The alternative of AoT is Just-in-Time compilation (JiT) which is performed runtime, therefore we can reduce the amount of computations required for the rendering of our application by performing the compilation as part of our build process.
 
 **工具**
 
@@ -353,33 +355,34 @@ AoT can be helpful not only for achieving more efficient bundling by performing 
 
 ### Web Workers
 
-The usual problem in the typical single-page application (SPA) is that our code is usually run in a single thread. This means that if we want to achieve smooth user experience with 60fps we have **at most 16ms** for execution between the individual frames are being rendered, otherwise, they'll drop by half.
+我們最常在典型的 SPA 遇到的問題是，我們的程式碼執行在單執行緒裡面。也就是說我們如果想要在 60 FPS 達到絲滑柔順的使用者體驗，**最多只有16毫秒**的時間去渲染各個畫面，不然幀數將會下降一半。
 
-In complex applications with a huge component tree, where the change detection needs to perform millions of checks each second it will not be hard to start dropping frames. Thanks to the Angular's agnosticism and being decoupled from DOM architecture, it's possible to run our entire application (including change detection) in a Web Worker and leave the main UI thread responsible only for rendering.
+在元件樹龐大的複雜應用程式裡面，每秒需要執行數以萬計的變更偵測檢查，這樣很容易讓幀數下降。幸好 Angular 將 DOM 解構進行了解構，可以在 Web Worker中執行整個應用程式（包含變更檢測），讓主 UI 執行緒只是則渲染。
 
 **工具**
 
-- The module which allows us to run our application in a Web Worker is supported by the core team. 範例s of how it can be used can be [found here](https://github.com/angular/angular/tree/master/modules/playground/src/web_workers).
-- [Webpack Web Worker Loader](https://github.com/webpack/worker-loader) - A Web Worker Loader for webpack.
+- 由核心團隊打造的模組，讓我們可以的應用程式可以在 Web Worker 執行。可以在[這裡](https://github.com/angular/angular/tree/master/modules/playground/src/web_workers)找到使用範例。
+（譯者註：找不到，網頁404）
+- [Webpack Web Worker Loader](https://github.com/webpack/worker-loader) - webpack 的 Web Worker 載入器
 
 **資源**
 
 - ["Using Web Workers for more responsive apps"](https://www.youtube.com/watch?v=Kz_zKXiNGSE)
 
-### Server-Side Rendering
+### 伺服器端渲染
 
-A big issue of the traditional SPA is that they cannot be rendered until the entire JavaScript required for their initial rendering is available. This leads to two big problems:
+傳統 SPA 網站最大的問題是在尚未取得所有渲染頁面所需 Javascript 之前，無法渲染任何東西。這會導致兩大問題： 
 
-- Not all search engines are running the JavaScript associated with the page so they are not able to index the content of dynamic apps properly.
-- Poor user experience, since the user will see nothing more than a blank/loading screen until the JavaScript associated with the page is downloaded, parsed and executed.
+- 不是所有的搜尋引擎都會執行頁面所需的 Javascript，因此會無法正確索引到動態應用程式的內容。
+- 糟糕的使用者體驗，因為在載入頁面所需的 Javascript 下載、解析、執行完之前，使用者只會看到空白或載入的畫面。
 
-Server-side rendering solves this issue by pre-rendering the requested page on the server and providing the markup of the rendered page during the initial page load.
+伺服器端渲染藉由在伺服器收到請求時，預先渲染頁面的內容來解決問題且在初始頁面載入提供頁面標記來解決問題
 
 **工具**
 
-- [Angular Universal](https://github.com/angular/angular/tree/master/packages/platform-server) - Universal (isomorphic) JavaScript support for Angular.
+- [Angular Universal](https://github.com/angular/angular/tree/master/packages/platform-server) - Angular 統一平台（同構應用）對 Javascript 的支援。
 - [Preboot](https://github.com/angular/preboot) - Library to help manage the transition of state (i.e. events, focus, data) from a server-generated web view to a client-generated web view.
-- [Scully](https://github.com/scullyio/scully) - Static site generator for Angular projects looking to embrace the JAMStack.
+- [Scully](https://github.com/scullyio/scully) - 擁抱 JAMStack 的 Angular 專案靜態網站產生器。
 
 **資源**
 
@@ -475,7 +478,7 @@ class PointAnimationComponent {
 
 #### Coalescing event change detections
 
-Angular uses zone.js to intercept events that occurred in the application and runs a change detection automatically. By default this happens when the [microtask queue](https://www.youtube.com/watch?v=cCOL7MC4Pl0) of the browser is empty, which in some cases may call redundant cycles.
+Angular 使用 zone.js to intercept events that occurred in the application and runs a change detection automatically. By default this happens when the [microtask queue](https://www.youtube.com/watch?v=cCOL7MC4Pl0) of the browser is empty, which in some cases may call redundant cycles.
 From v9, Angular provides a way to coalesce event change detections by turning `ngZoneEventCoalescing` on, i.e
 ```typescript
 platformBrowser()
@@ -547,20 +550,19 @@ export class YtFeedComponent {
 
 #### 最小化 DOM 元素
 
-當增加元素到畫面上的時候，渲染 DOM 元素通常是最成本最高的操作。
-Rendering the DOM elements is usually the most expensive operation when adding elements to the UI. The main work is usually caused by inserting the element into the DOM and applying the styles. If `*ngFor` renders a lot of elements, browsers (especially older ones) may slow down and need more time to finish rendering of all elements. This is not specific to Angular.
+當增加元素到畫面上的時候，渲染 DOM 元素通常是最成本最高的操作。最主要的工作通常來自於插入元素到 DOM 當中與應用樣式。假設 `*ngFor` 渲染大量的元素，瀏覽器（特別是那些舊的）可能會變慢且需要更多時間去完成渲染所有的元素。這不是只有 Angular 獨有的問題
 
-To reduce rendering time, try the following:
-- Apply virtual scrolling via [CDK](https://material.angular.io/cdk/scrolling/overview) or [ngx-virtual-scroller](https://github.com/rintoj/ngx-virtual-scroller)
-- Reducing the amount of DOM elements rendered in `*ngFor` section of your template. Usually, unneeded/unused DOM elements arise from extending the template again and again. Rethinking its structure probably makes things much easier.
-- Use [`ng-container`](https://angular.io/guide/structural-directives#ngcontainer) where possible
+為了降低渲染時間，試試看以下這些：
+- 使用 [CDK](https://material.angular.io/cdk/scrolling/overview)的 virtual scrolling 或 [ngx-virtual-scroller](https://github.com/rintoj/ngx-virtual-scroller)
+- 減少你的模板在 `*ngFor` 區域裡面渲染出來的 DOM 元素總量。通常不需要或未使用的 DOM 元素來自於你一次又一次擴充模板。好好思考一下怎樣的結構可以讓事情簡單一點。
+- 如果可以的話，使用 [`ng-container`](https://angular.io/guide/structural-directives#ngcontainer)
 
 **資源**
 
 - ["NgFor directive"](https://angular.io/docs/ts/latest/api/common/index/NgFor-directive.html) - official documentation for `*ngFor`
 - ["Angular — Improve performance with trackBy"](https://netbasal.com/angular-2-improve-performance-with-trackby-cc147b5104e5) - shows gif demonstration of the approach
 - [Component Dev Kit (CDK) Virtual Scrolling](https://material.angular.io/cdk/scrolling/overview) - API description
-- [ngx-virtual-scroller](https://github.com/rintoj/ngx-virtual-scroller) - displays a virtual, "infinite" list
+- [ngx-virtual-scroller](https://github.com/rintoj/ngx-virtual-scroller) - 顯示虛擬「無限的」列表
 
 ### Optimize template expressions
 
