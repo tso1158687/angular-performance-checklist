@@ -18,12 +18,11 @@
 - 網路效能 - 列出許多可以改善應用程式載入時間的方法，包含網路延遲或頻寬不足的對應方法。
 - 執行效能 - 改善應用程式執行時的效能，包含變更檢測和渲染相關的最佳化。
 
-Some practices impact both categories so there could be a slight intersection, however, the differences in the use cases and the implications will be explicitly mentioned.
+有些例子會影響這兩大部分，因此可能有些交集，但是將會明確提到兩者之間在使用案例和影響的差異。
 
-大多數小節所列出來與特定例子相關的工具，可以幫助我們透過自動化的開發流程提高效率
+大多數小節所列出來與特定例子相關的工具，可以幫助我們透過自動化的開發流程提高效率。
 
-注意大多數的例子都適用於HTTP/1.1 和 HTTP/2。
- Practices which make an exception will be mentioned by specifying to which version of the protocol they could be applied.
+注意大多數的例子都適用於HTTP/1.1 和 HTTP/2。通過指定它們可以應用於哪個版本的協議來提及例外的例子。
 
 ## 目錄
 
@@ -64,9 +63,11 @@ Some practices impact both categories so there could be a slight intersection, h
 
 ## 網路效能
 
+在本章節的部分工具因為仍在開發中，所以可能有更動。 Angular 核心團隊正在努力讓
 Some of the tools in this section are still in development and are subject to change. The Angular core team is working on automating the build process for our applications as much as possible so a lot of things will happen transparently.
 
 ### 打包
+
 
 Bundling is a standard practice aiming to reduce the number of requests that the browser needs to perform in order to deliver the application requested by the user. In essence, the bundler receives as an input a list of entry points and produces one or more bundles. This way, the browser can get the entire application by performing only a few requests, instead of requesting each individual resource separately.
 
@@ -156,6 +157,7 @@ console.log(foo());
 
 自從 Angular 6 發布之後， Angular 團隊提供一項新特色允許將服務 (service) 搖樹優化，這表示除非你的服務在其他服務或元件中使用到，不然將不會包含在最終的打包當中。刪除未使用的程式碼，將有助於縮小打包過後的大小。
 
+你可以使用 `providedIn` 屬性讓你的服務可以被搖樹。再來就可以從 `NgModule` 
 You can make your services tree-shakeable by using the `providedIn` attribute to define where the service should be initialized when using the `@Injectable()` decorator. Then you should remove it from the `providers` attribute of your `NgModule` declaration as well as its import statement as follows.
 
 Before:
