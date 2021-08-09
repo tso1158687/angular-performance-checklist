@@ -54,7 +54,7 @@
       - [Run outside Angular](#run-outside-angular)
       - [Coalescing event change detections](#coalescing-event-change-detections)
     - [使用純管道](#use-pure-pipes)
-    - [`*ngFor` directive](#ngfor-directive)
+    - [`*ngFor` 指令](#ngfor-directive)
       - [使用 `trackBy` 選項](#use-trackby-option)
       - [最小化 DOM 元素](#最小化 DOM 元素)
     - [最佳化模板語法](#optimize-template-expressions)
@@ -68,16 +68,15 @@ Some of the tools in this section are still in development and are subject to ch
 
 ### 打包
 
+打包是一個標準的動作，目的在降低瀏覽器在使用者執行應用程式的各種動作的多次請求的請求數
+ In essence, the bundler receives as an input a list of entry points and produces one or more bundles. 這樣瀏覽器執行幾個請求就可以取得整個應用程式，而非單獨請求個別資源。
 
-Bundling is a standard practice aiming to reduce the number of requests that the browser needs to perform in order to deliver the application requested by the user. In essence, the bundler receives as an input a list of entry points and produces one or more bundles. This way, the browser can get the entire application by performing only a few requests, instead of requesting each individual resource separately.
-
-As your application grows bundling everything into a single large bundle would again be counterproductive. Explore Code Splitting techniques using Webpack.
+隨著你的應用程式不斷成長，且將所有的東西都打包進單一龐大的應用程式中反而是適得其反。這時候需要使用 Webpack 去拆分程式碼
 
 **Additional http requests will not be a concern with HTTP/2 because of the [server push](https://http2.github.io/faq/#whats-the-benefit-of-server-push) feature.**
 
 **工具**
-
-Tools which allows us to bundle our applications efficiently are:
+幫助我們更有效率打包應用程式的工具：
 
 - [Webpack](https://webpack.js.org) - provides efficient bundling by performing [tree-shaking](#tree-shaking).
 - [Webpack Code Splitting](https://webpack.js.org/guides/code-splitting/) - Techniques to split your code.
@@ -254,8 +253,7 @@ The 工具 here is not Angular-specific and entirely depends on the web/applicat
 - ["2.5X Smaller Angular Applications with Google Closure Compiler"](http://blog.mgechev.com/2016/07/21/even-smaller-angular2-applications-closure-tree-shaking/)
 
 ### 預先載入資源
-
-Resource pre-fetching is a great way to improve user experience. We can either pre-fetch assets (images, styles, modules intended to be [loaded lazily](#lazy-loading-of-資源), etc.) or data. There are different pre-fetching strategies but most of them depend on specifics of the application.
+預先載入資源是一個很讚改進使用者體驗的方法。我們可以預先取得檔案（圖片、樣式或想要[惰性載入](#lazy-loading-of-資源)的模組等等）或資料。這裡有不同預先載入的策略，但大多數取決於應用程式的個別情形
 
 ### 惰性載入資源
 
