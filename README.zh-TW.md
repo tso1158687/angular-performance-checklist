@@ -97,7 +97,7 @@ Some of the tools in this section are still in development and are subject to ch
 
 **工具**
 
-- [Uglify](https://github.com/mishoo/UglifyJS) - performs minification such as mangling variables, removal of comments & whitespace, dead code elimination, etc. Written completely in JavaScript, has plugins for all popular task runners.
+- [Uglify](https://github.com/mishoo/UglifyJS) - performs minification such as mangling variables, 移除註解與空白或刪除無用程式碼等等。 Written completely in JavaScript, has plugins for all popular task runners.
 - [Google Closure Compiler](https://github.com/google/closure-compiler) - performs similar to uglify type of minification. In advanced mode, it transforms the AST of our program aggressively in order to be able to perform even more sophisticated optimizations. It has also a [JavaScript version](https://www.npmjs.com/package/google-closure-compiler) that can be [found here](https://www.npmjs.com/package/google-closure-compiler). GCC also supports *most of the ES2015 modules syntax* so it can [perform tree-shaking](#tree-shaking).
 
 **資源**
